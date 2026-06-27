@@ -1,0 +1,83 @@
+{
+  "Print unibest Vue3 SFC": {
+    "scope": "vue",
+    "prefix": "v3",
+    "body": [
+      "<script lang=\"ts\" setup>",
+      "definePage({",
+      "  style: {",
+      "    navigationBarTitleText: '$1',",
+      "  },",
+      "})",
+      "defineOptions({",
+      "  name: '$2',",
+      "  options: { ",
+      "   virtualHost: true,",
+      "  },",
+      "})",
+      "</script>\n",
+      "<template>",
+      "  <view class=\"\">$3</view>",
+      "</template>\n",
+      "<style lang=\"scss\" scoped>",
+      "//$4",
+      "</style>\n"
+    ]
+  },
+  "Print unibest style": {
+    "scope": "vue",
+    "prefix": "st",
+    "body": [
+      "<style lang=\"scss\" scoped>",
+      "//",
+      "</style>\n"
+    ]
+  },
+  "Print unibest script with definePage": {
+    "scope": "vue",
+    "prefix": "sc",
+    "body": [
+      "<script lang=\"ts\" setup>",
+      "definePage({",
+      "  style: {",
+      "    navigationBarTitleText: '$1',",
+      "  },",
+      "})",
+      "defineOptions({",
+      "  name: '$2',",
+      "  options: { ",
+      "   virtualHost: true,",
+      "  },",
+      "})",
+      "</script>\n"
+    ]
+  },
+  "Print unibest template": {
+    "scope": "vue",
+    "prefix": "te",
+    "body": [
+      "<template>",
+      "  <view class=\"\">$1</view>",
+      "</template>\n"
+    ]
+  },
+  "Print unibest empty page": {
+    "scope": "vue",
+    "prefix": "uni1",
+    "body": [
+      "<script lang=\"ts\" setup>",
+      "definePage({",
+      "  style: {",
+      "    navigationBarTitleText: '页面标题',",
+      "  },",
+      "})",
+      "</script>\n",
+      "<template>",
+      "  <view>\n    页面标题",
+      "  </view>\n",
+      "</template>\n",
+      "<style scoped lang=\"scss\"></style>\n"
+    ],
+    "description": "生成 unibest 空页面模板"
+  }
+}
