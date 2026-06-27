@@ -85,17 +85,17 @@ function getSystemDeviceId(): string {
 function getH5DeviceId(): string {
   // 尝试从localStorage获取已存在的设备ID
   let deviceId = uni.getStorageSync(STORAGE_KEY)
-  
+
   if (deviceId) {
     return deviceId
   }
-  
+
   // 生成新的设备ID (使用标准UUID)
   deviceId = generateDeviceId()
-  
+
   // 保存到本地存储
   uni.setStorageSync(STORAGE_KEY, deviceId)
-  
+
   return deviceId
 }
 
@@ -118,7 +118,7 @@ function generateDeviceId(): string {
     return crypto.randomUUID()
   }
   // #endif
-  
+
   // 降级方案：使用Math.random()生成UUID v4格式
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = Math.random() * 16 | 0
@@ -137,13 +137,13 @@ function generateHashId(str: string): string {
     hash = ((hash << 5) - hash) + char
     hash = hash & hash // Convert to 32bit integer
   }
-  
+
   // 转换为16进制并补齐长度
   const hexHash = Math.abs(hash).toString(16).padStart(8, '0')
-  
+
   // 生成UUID格式的设备ID
   const timestamp = Date.now().toString(16).padStart(12, '0')
   const random = Math.random().toString(16).substring(2, 10)
-  
+
   return `${hexHash}-${timestamp.substring(0, 4)}-4${timestamp.substring(4, 7)}-${random.substring(0, 4)}-${random.substring(4, 8)}${hexHash.substring(0, 4)}`
 }

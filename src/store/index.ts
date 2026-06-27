@@ -15,6 +15,7 @@ setActivePinia(store)
 
 export default store
 
+export * from './appMode'
 // 模块统一导出
 export * from './pageScroll'
 export * from './token'

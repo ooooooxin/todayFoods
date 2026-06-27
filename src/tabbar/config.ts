@@ -32,14 +32,20 @@ export const nativeTabbarList: NativeTabBarItem[] = [
   {
     iconPath: 'static/tabbar/ips.png',
     selectedIconPath: 'static/tabbar/ips1.png',
-    pagePath: 'pages/ipSeries/index',
-    text: 'IP系列',
+    pagePath: 'pages/nearby/index',
+    text: '附近吃啥',
   },
   {
     iconPath: 'static/tabbar/ip.png',
     selectedIconPath: 'static/tabbar/ip1.png',
-    pagePath: 'pages/ip/index',
-    text: 'IP',
+    pagePath: 'pages/custom/index',
+    text: '定制食材',
+  },
+  {
+    iconPath: 'static/tabbar/ip.png',
+    selectedIconPath: 'static/tabbar/ip1.png',
+    pagePath: 'pages/social/index',
+    text: '群组拼单',
   },
   {
     iconPath: 'static/tabbar/my.png',

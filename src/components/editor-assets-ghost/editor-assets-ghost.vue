@@ -15,11 +15,12 @@ const props = defineProps<{
 const x = ref(props.initX || 0)
 const y = ref(props.initY || 0)
 
-watch(() => props.initX, (val) => x.value = val)
-watch(() => props.initY, (val) => y.value = val)
+watch(() => props.initX, val => x.value = val)
+watch(() => props.initY, val => y.value = val)
 
 function handleMove(data: { x: number, y: number }) {
-  if (!props.active) return
+  if (!props.active)
+    return
   x.value = data.x
   y.value = data.y
 }
@@ -45,7 +46,7 @@ onUnmounted(() => {
       opacity: 0.85,
       pointerEvents: 'none',
       willChange: 'transform',
-      transition: 'transform 0.05s linear'
+      transition: 'transform 0.05s linear',
     }"
   >
     <view

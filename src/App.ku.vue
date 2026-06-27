@@ -49,7 +49,7 @@ defineExpose({
 
     <!-- 微信小程序自定义导航栏Logo -->
     <!-- #ifdef MP-WEIXIN || H5 -->
-    <CustomLogo :is-login-page="isLoginPage" />
+    <!-- <CustomLogo :is-login-page="isLoginPage" /> -->
     <!-- #endif -->
 
     <KuRootView />
