@@ -118,9 +118,11 @@ function submitFeedback() {
         <view class="flex-1">
           <text class="block text-base text-gray-800 font-black">干饭达人小杰</text>
           <view class="mt-1 flex items-center gap-1.5">
-            <text class="text-4xs rounded px-2 py-0.5 text-white font-bold" :style="{ background: themeColor }">
-              {{ isHealth ? '🥗 减脂模范生' : '🍗 资深干饭人' }}
-            </text>
+            <view class="text-4xs flex items-center rounded px-2 py-0.5 text-white font-bold" :style="{ background: themeColor }">
+              <view v-if="isHealth" class="i-carbon-leaf mr-1 inline-block h-3 w-3 align-middle text-xs text-white" />
+              <view v-else class="i-carbon-restaurant mr-1 inline-block h-3 w-3 align-middle text-xs text-white" />
+              {{ isHealth ? '减脂模范生' : '资深干饭人' }}
+            </view>
             <text class="text-3xs text-gray-500 font-semibold">健康指数: {{ stats.healthRate }}%</text>
           </view>
         </view>
@@ -129,7 +131,10 @@ function submitFeedback() {
 
     <!-- 饮食数据仪表盘 -->
     <view class="mx-4 mb-6 mt-2 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
-      <text class="mb-4 block text-sm text-gray-800 font-black">📊 近期干饭周报分析</text>
+      <view class="mb-4 block flex items-center text-sm text-gray-800 font-black">
+        <view class="i-carbon-chart-bar mr-1.5 inline-block h-4 w-4 align-middle text-blue-600" />
+        近期干饭周报分析
+      </view>
 
       <view class="grid grid-cols-2 gap-4">
         <view class="flex flex-col border border-gray-100/50 rounded-2xl bg-gray-50 p-3">
@@ -160,11 +165,17 @@ function submitFeedback() {
 
     <!-- 黑白名单管理 (偏好避坑) -->
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
-      <text class="mb-4 block text-sm text-gray-800 font-black">🎯 个人偏好管理</text>
+      <view class="mb-4 block flex items-center text-sm text-gray-800 font-black">
+        <view class="i-carbon-favorite mr-1.5 inline-block h-4 w-4 align-middle text-red-500" />
+        个人偏好管理
+      </view>
 
       <!-- 白名单：最爱吃 -->
       <view class="mb-5">
-        <text class="mb-2 block text-xs text-gray-700 font-bold">⭐ 白名单（必定会优先推荐）：</text>
+        <view class="mb-2 block flex items-center text-xs text-gray-700 font-bold">
+          <view class="i-carbon-star-filled mr-1 inline-block h-3.5 w-3.5 align-middle text-yellow-500" />
+          白名单（必定会优先推荐）：
+        </view>
         <view class="mb-2.5 flex flex-wrap gap-1.5">
           <view
             v-for="item in appStore.whitelist"
@@ -188,7 +199,10 @@ function submitFeedback() {
 
       <!-- 黑名单：绝不吃 -->
       <view>
-        <text class="mb-2 block text-xs text-gray-700 font-bold">🚫 黑名单（绝不出现在推荐中）：</text>
+        <view class="mb-2 block flex items-center text-xs text-gray-700 font-bold">
+          <view class="i-carbon-misuse mr-1 inline-block h-3.5 w-3.5 align-middle text-red-500" />
+          黑名单（绝不出现在推荐中）：
+        </view>
         <view class="mb-2.5 flex flex-wrap gap-1.5">
           <view
             v-for="item in appStore.blacklist"
@@ -214,7 +228,10 @@ function submitFeedback() {
     <!-- 历史干饭记录 -->
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-3 flex items-center justify-between">
-        <text class="text-sm text-gray-800 font-black">📅 历史干饭卡片（日历流）</text>
+        <view class="flex items-center text-sm text-gray-800 font-black">
+          <view class="i-carbon-time mr-1.5 inline-block h-4 w-4 align-middle text-orange-600" />
+          历史干饭卡片（日历流）
+        </view>
         <text class="text-4xs text-gray-400 font-bold">共记录{{ appStore.history.length }}餐</text>
       </view>
 
@@ -225,7 +242,7 @@ function submitFeedback() {
           class="flex items-center justify-between border border-gray-100 rounded-2xl bg-gray-50 p-3"
         >
           <view class="flex items-center gap-2">
-            <text class="text-xl">{{ hist.mode === 'health' ? '🥗' : '🍱' }}</text>
+            <view class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-xl" :class="[hist.mode === 'health' ? 'i-carbon-leaf text-green-500' : 'i-carbon-restaurant text-orange-500']" />
             <view>
               <view class="flex items-center gap-1.5">
                 <text class="text-xs text-gray-700 font-black">{{ hist.food }}</text>
@@ -236,7 +253,10 @@ function submitFeedback() {
           </view>
 
           <view class="flex items-center gap-2.5">
-            <text v-if="hist.rating" class="text-3xs text-orange-500 font-black">★ {{ hist.rating }}</text>
+            <view v-if="hist.rating" class="flex items-center text-3xs text-orange-500 font-black">
+              <view class="i-carbon-star-filled mr-0.5 inline-block h-3 w-3 align-middle text-orange-500" />
+              {{ hist.rating }}
+            </view>
             <text class="h-5 w-5 flex cursor-pointer items-center justify-center rounded-full bg-gray-200/50 text-xs text-red-500 font-black hover:bg-gray-200" @click="appStore.deleteHistory(idx)">×</text>
           </view>
         </view>
@@ -248,7 +268,10 @@ function submitFeedback() {
 
     <!-- 客服与反馈意见 -->
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
-      <text class="mb-4 block text-sm text-gray-800 font-black">💬 客服与 Bug 反馈</text>
+      <view class="mb-4 block flex items-center text-sm text-gray-800 font-black">
+        <view class="i-carbon-chat-bot mr-1.5 inline-block h-4 w-4 align-middle text-yellow-600" />
+        客服与 Bug 反馈
+      </view>
 
       <view class="flex flex-col gap-3">
         <textarea v-model="feedbackText" placeholder="请输入您的Bug反馈、建议或对小程序的期望..." class="h-20 w-full border rounded-xl bg-gray-50 p-3 text-xs" />

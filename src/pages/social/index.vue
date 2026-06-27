@@ -70,9 +70,9 @@ function generateShareCard() {
 
 // 2. 好友代选与投喂
 const friendHistory = ref([
-  { friend: '女朋友', food: '🥑 藜麦三明治', time: '今天 11:32', type: '代选' },
-  { friend: '好基友阿强', food: '🍖 聚点双人烤肉', time: '昨天 18:15', type: '投喂' },
-  { friend: '部门主管', food: '🥗 鸡胸肉意面沙拉', time: '2026-06-25 12:05', type: '代选' },
+  { friend: '女朋友', food: '藜麦三明治', time: '今天 11:32', type: '代选' },
+  { friend: '好基友阿强', food: '聚点双人烤肉', time: '昨天 18:15', type: '投喂' },
+  { friend: '部门主管', food: '鸡胸肉意面沙拉', time: '2026-06-25 12:05', type: '代选' },
 ])
 
 function requestFriendSelect() {
@@ -157,7 +157,10 @@ function submitRant() {
     <!-- 1. 微信群投票拼单 -->
     <view class="mx-4 mb-6 mt-2 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-3 flex items-center justify-between">
-        <text class="text-sm text-gray-800 font-black">🗳️ 微信群投票拼单</text>
+        <view class="flex items-center text-sm text-gray-800 font-black">
+          <view class="i-carbon-event mr-1.5 inline-block h-4 w-4 align-middle text-blue-600" />
+          微信群投票拼单
+        </view>
         <text class="text-3xs text-gray-400 font-bold">发起同事/群投票</text>
       </view>
 
@@ -214,14 +217,18 @@ function submitRant() {
         @click="generateShareCard"
       >
         <text v-if="isSharing" class="mr-1 h-3.5 w-3.5 animate-spin border-3 border-white border-t-transparent rounded-full" />
-        {{ isSharing ? '正在生成卡片...' : '📤 微信群群发投票卡片' }}
+        <view v-if="!isSharing" class="i-carbon-share mr-1.5 inline-block h-4 w-4 align-middle text-white" />
+        {{ isSharing ? '正在生成卡片...' : '微信群群发投票卡片' }}
       </button>
     </view>
 
     <!-- 2. 好友代选与投喂 -->
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-3 flex items-center justify-between">
-        <text class="text-sm text-gray-800 font-black">🧑‍🤝‍🧑 好友代选与投喂</text>
+        <view class="flex items-center text-sm text-gray-800 font-black">
+          <view class="i-carbon-group mr-1.5 inline-block h-4 w-4 align-middle text-pink-500" />
+          好友代选与投喂
+        </view>
         <button
           class="shadow-xs border border-gray-200 rounded-full bg-white/80 px-2.5 py-1 text-3xs font-black"
           @click="requestFriendSelect"
@@ -237,7 +244,7 @@ function submitRant() {
           class="flex items-center justify-between border border-gray-100 rounded-2xl bg-gray-50 p-3"
         >
           <view class="flex items-center gap-2">
-            <text class="text-xl">{{ hist.type === '代选' ? '🔮' : '🎁' }}</text>
+            <view class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-xl" :class="[hist.type === '代选' ? 'i-carbon-user-avatar text-purple-500' : 'i-carbon-gift text-pink-500']" />
             <view>
               <view class="flex items-center gap-1.5">
                 <text class="text-xs text-gray-700 font-black">{{ hist.friend }}</text>
@@ -254,7 +261,10 @@ function submitRant() {
 
     <!-- 3. 吃货吐槽打卡墙 -->
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
-      <text class="mb-4 block text-sm text-gray-800 font-black">🗣️ 吃货避雷吐槽/打卡墙</text>
+      <view class="mb-4 block flex items-center text-sm text-gray-800 font-black">
+        <view class="i-carbon-chat-bot mr-1.5 inline-block h-4 w-4 align-middle text-yellow-600" />
+        吃货避雷吐槽/打卡墙
+      </view>
 
       <!-- 写帖子表单 -->
       <view class="mb-5 flex flex-col gap-3 border border-gray-100 rounded-2xl bg-gray-50 p-4">
@@ -267,29 +277,34 @@ function submitRant() {
           <view class="flex items-center gap-1.5">
             <text class="text-xs text-gray-500 font-bold">评分：</text>
             <picker :range="[1, 2, 3, 4, 5]" @change="(e: any) => inputRating = Number(e.detail.value) + 1">
-              <text class="cursor-pointer text-xs text-orange-500 font-extrabold">★ {{ inputRating }}星</text>
+              <view class="flex cursor-pointer items-center text-xs text-orange-500 font-extrabold">
+                <view class="i-carbon-star-filled mr-0.5 inline-block h-3 w-3 align-middle text-orange-500" />
+                {{ inputRating }}星
+              </view>
             </picker>
           </view>
 
           <view class="flex gap-2">
             <button
-              class="border rounded-full px-3 py-1 text-3xs font-bold"
+              class="flex items-center border rounded-full px-3 py-1 text-3xs font-bold"
               :class="inputTag === '推荐' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-700 border-gray-200'"
               @click="inputTag = '推荐'"
             >
-              👍 推荐
+              <view class="i-carbon-thumbs-up mr-1 inline-block h-3 w-3 align-middle text-xs" />
+              推荐
             </button>
             <button
-              class="border rounded-full px-3 py-1 text-3xs font-bold"
+              class="flex items-center border rounded-full px-3 py-1 text-3xs font-bold"
               :class="inputTag === '避雷' ? 'bg-red-500 text-white border-red-500' : 'bg-white text-gray-700 border-gray-200'"
               @click="inputTag = '避雷'"
             >
-              👎 避雷
+              <view class="i-carbon-thumbs-down mr-1 inline-block h-3 w-3 align-middle text-xs" />
+              避雷
             </button>
           </view>
         </view>
 
-        <textarea v-model="inputComment" placeholder="发表你的干饭体验、避雷指南或安利理由..." class="h-16 w-full border rounded-xl bg-white p-3 text-xs" />
+        <textarea v-model="inputComment" placeholder="发表你的干饭体验、避雷指南 or 安利理由..." class="h-16 w-full border rounded-xl bg-white p-3 text-xs" />
 
         <button
           class="shadow-xs w-full rounded-xl bg-gray-800 py-2 text-xs text-white font-bold"
@@ -315,16 +330,23 @@ function submitRant() {
               </view>
             </view>
 
-            <view class="text-right">
+            <view class="flex flex-col items-end text-right">
               <text class="text-4xs rounded px-2 py-0.5 text-white font-black" :class="rant.tag.includes('推荐') ? 'bg-green-500' : 'bg-red-500'">
                 {{ rant.tag }}
               </text>
-              <text class="mt-0.5 block text-3xs text-orange-500 font-extrabold">★ {{ rant.rating }}</text>
+              <view class="mt-0.5 block flex items-center justify-end text-3xs text-orange-500 font-extrabold">
+                <view class="i-carbon-star-filled mr-0.5 inline-block h-2.5 w-2.5 align-middle text-orange-500" />
+                {{ rant.rating }}
+              </view>
             </view>
           </view>
 
-          <view class="mb-2 border border-gray-100/50 rounded-xl bg-gray-50 p-2.5 text-2xs text-gray-500 font-semibold">
-            🏬 {{ rant.restaurant }} · 🍲 {{ rant.food }}
+          <view class="mb-2 flex items-center gap-1.5 border border-gray-100/50 rounded-xl bg-gray-50 p-2.5 text-2xs text-gray-500 font-semibold">
+            <view class="i-carbon-store inline-block h-3 w-3 align-middle text-gray-400" />
+            {{ rant.restaurant }}
+            <view class="mx-1 h-2.5 w-px bg-gray-300" />
+            <view class="i-carbon-restaurant inline-block h-3 w-3 align-middle text-gray-400" />
+            {{ rant.food }}
           </view>
 
           <text class="text-xs text-gray-600 font-medium leading-relaxed">{{ rant.comment }}</text>

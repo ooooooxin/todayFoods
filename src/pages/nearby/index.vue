@@ -55,7 +55,7 @@ interface Restaurant {
 const normalRestaurants: Restaurant[] = [
   {
     name: '聚点串串香火锅（大望路店）',
-    logo: '🍲',
+    logo: 'i-carbon-restaurant',
     score: 4.8,
     distance: '320m',
     avgPrice: 65,
@@ -65,7 +65,7 @@ const normalRestaurants: Restaurant[] = [
   },
   {
     name: '杨国福麻辣烫（万达广场店）',
-    logo: '🍜',
+    logo: 'i-carbon-restaurant',
     score: 4.5,
     distance: '580m',
     avgPrice: 28,
@@ -75,7 +75,7 @@ const normalRestaurants: Restaurant[] = [
   },
   {
     name: '老北京铜锅涮肉（金地广场店）',
-    logo: '🐑',
+    logo: 'i-carbon-restaurant',
     score: 4.9,
     distance: '890m',
     avgPrice: 98,
@@ -85,7 +85,7 @@ const normalRestaurants: Restaurant[] = [
   },
   {
     name: '麦当劳 (大望路商场餐厅)',
-    logo: '🍔',
+    logo: 'i-carbon-restaurant',
     score: 4.7,
     distance: '210m',
     avgPrice: 32,
@@ -98,7 +98,7 @@ const normalRestaurants: Restaurant[] = [
 const healthRestaurants: Restaurant[] = [
   {
     name: '绿野仙踪·轻食低卡沙拉（大望路店）',
-    logo: '🥗',
+    logo: 'i-carbon-leaf',
     score: 4.9,
     distance: '150m',
     avgPrice: 35,
@@ -109,7 +109,7 @@ const healthRestaurants: Restaurant[] = [
   },
   {
     name: '沙野轻食（SOHO现代城店）',
-    logo: '🥑',
+    logo: 'i-carbon-leaf',
     score: 4.7,
     distance: '420m',
     avgPrice: 32,
@@ -120,7 +120,7 @@ const healthRestaurants: Restaurant[] = [
   },
   {
     name: 'Wagas 沃歌斯（太古里店）',
-    logo: '🍹',
+    logo: 'i-carbon-cafe',
     score: 4.8,
     distance: '1.1km',
     avgPrice: 78,
@@ -131,7 +131,7 @@ const healthRestaurants: Restaurant[] = [
   },
   {
     name: '健康食刻·Poke能量碗',
-    logo: '🍱',
+    logo: 'i-carbon-restaurant',
     score: 4.6,
     distance: '620m',
     avgPrice: 42,
@@ -210,7 +210,7 @@ function redirectToPlatform() {
     <view class="px-4 py-2">
       <view class="flex items-center justify-between">
         <view class="max-w-70% flex items-center rounded-full bg-white/70 px-4 py-2 shadow-sm backdrop-blur">
-          <text class="mr-1.5 text-sm">📍</text>
+          <view class="i-carbon-location mr-1.5 inline-block h-3.5 w-3.5 align-middle text-red-500" />
           <text class="flex-1 truncate text-xs text-gray-700 font-bold">{{ locationName }}</text>
         </view>
         <button
@@ -218,7 +218,7 @@ function redirectToPlatform() {
           :disabled="isLocating"
           @click="refreshLocation"
         >
-          <text class="mr-1" :class="{ 'animate-spin': isLocating }">🔄</text>
+          <view class="mr-1 inline-block h-3.5 w-3.5 align-middle" :class="[isLocating ? 'i-carbon-renew animate-spin' : 'i-carbon-renew']" />
           {{ isLocating ? '重定位...' : '刷新定位' }}
         </button>
       </view>
@@ -226,7 +226,10 @@ function redirectToPlatform() {
 
     <!-- CPS 淘客外卖优惠券大广告位 -->
     <view class="mb-6 px-4">
-      <text class="mb-3 block text-sm text-gray-800 font-black">🎟️ 专享外卖CPS优惠券</text>
+      <view class="mb-3 block flex items-center text-sm text-gray-800 font-black">
+        <view class="i-carbon-ticket mr-1.5 inline-block h-4 w-4 align-middle text-yellow-600" />
+        专享外卖CPS优惠券
+      </view>
       <view class="flex flex-col gap-3">
         <view
           v-for="(coupon, idx) in coupons"
@@ -260,10 +263,10 @@ function redirectToPlatform() {
     <!-- 附近商户推荐列表 -->
     <view class="px-4">
       <view class="mb-3 flex items-center justify-between">
-        <text class="flex items-center text-sm text-gray-800 font-black">
-          <text class="mr-1">🏪</text>
+        <view class="flex items-center text-sm text-gray-800 font-black">
+          <view class="i-carbon-restaurant mr-1.5 inline-block h-4 w-4 align-middle text-orange-500" />
           附近吃啥推荐卡片
-        </text>
+        </view>
         <text class="text-3xs text-gray-500 font-bold">按 {{ isHealth ? '轻食健康度' : '人均偏好' }} 推荐</text>
       </view>
 
@@ -277,22 +280,26 @@ function redirectToPlatform() {
           <!-- 第一行：商户名与图标 -->
           <view class="flex items-start justify-between">
             <view class="flex items-center gap-2">
-              <text class="text-2xl">{{ rest.logo }}</text>
+              <view class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-2xl" :class="[rest.logo, isHealth ? 'text-green-600' : 'text-orange-500']" />
               <view>
                 <text class="line-clamp-1 block text-sm text-gray-800 font-black">{{ rest.name }}</text>
                 <view class="mt-0.5 flex items-center gap-1.5">
                   <text class="rounded px-1.5 py-0.5 text-3xs font-bold" :style="{ background: `${themeColor}12`, color: themeColor }">
                     {{ rest.tag }}
                   </text>
-                  <text v-if="rest.kcal" class="border border-green-100 rounded bg-green-50 px-1.5 py-0.5 text-3xs text-green-700 font-bold">
-                    🔥 {{ rest.kcal }}
-                  </text>
+                  <view v-if="rest.kcal" class="flex items-center border border-green-100 rounded bg-green-50 px-1.5 py-0.5 text-3xs text-green-700 font-bold">
+                    <view class="i-carbon-flash mr-0.5 inline-block h-3 w-3 align-middle text-green-700" />
+                    {{ rest.kcal }}
+                  </view>
                 </view>
               </view>
             </view>
 
-            <view class="text-right">
-              <text class="text-xs text-orange-500 font-extrabold">★ {{ rest.score }}</text>
+            <view class="flex flex-col items-end text-right">
+              <view class="flex items-center text-xs text-orange-500 font-extrabold">
+                <view class="i-carbon-star-filled mr-0.5 inline-block h-3 w-3 align-middle text-orange-500" />
+                {{ rest.score }}
+              </view>
               <text class="mt-0.5 block text-3xs text-gray-400">{{ rest.distance }} · ¥{{ rest.avgPrice }}/人</text>
             </view>
           </view>
@@ -324,7 +331,7 @@ function redirectToPlatform() {
     <!-- CPS 领券跳转模拟弹出层 -->
     <view v-if="showCouponModal" class="backdrop-blur-xs fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/60 p-6">
       <view class="animate-scale-in max-w-sm w-full overflow-hidden rounded-3xl bg-white p-6 text-center shadow-2xl">
-        <text class="my-4 text-5xl">🎁</text>
+        <view class="i-carbon-gift mx-auto my-4 text-5xl text-orange-500" />
         <text class="block text-base text-gray-800 font-extrabold">优惠码领取成功！</text>
         <text class="mt-2 block text-xs text-gray-400">专享 CPS 隐藏推广链接已自动为您激活</text>
 

@@ -343,10 +343,10 @@ onMounted(() => {
         />
 
         <view class="z-10 h-7 w-20 flex items-center justify-center text-xs font-bold transition-colors" :class="!isHealth ? 'text-white' : 'text-gray-600'">
-          <text class="mr-0.5">🔥</text>大众模式
+          <view class="i-carbon-fire mr-0.5 inline-block h-3.5 w-3.5 align-middle" />大众模式
         </view>
         <view class="z-10 h-7 w-20 flex items-center justify-center text-xs font-bold transition-colors" :class="isHealth ? 'text-white' : 'text-gray-600'">
-          <text class="mr-0.5">🥗</text>轻食增肌
+          <view class="i-carbon-leaf mr-0.5 inline-block h-3.5 w-3.5 align-middle" />轻食增肌
         </view>
       </view>
     </view>
@@ -354,7 +354,7 @@ onMounted(() => {
     <!-- 顶栏状态通知 -->
     <view class="mx-4 mb-4 mt-2 flex items-center justify-between rounded-2xl bg-white/70 p-3 shadow-sm backdrop-blur">
       <view class="flex items-center">
-        <text class="mr-1.5 text-base">⚡</text>
+        <view class="i-carbon-flash mr-1.5 inline-block h-4 w-4 align-middle text-yellow-500" />
         <text class="text-xs text-gray-700 font-medium">今日剩余抽取次数：</text>
         <text class="text-sm font-black" :class="appStore.drawLimit.count > 0 ? 'text-gray-800' : 'text-red-500'">
           {{ appStore.drawLimit.count }}次
@@ -377,7 +377,7 @@ onMounted(() => {
         :class="activeTool === 'wheel' ? 'bg-white shadow text-gray-800' : 'text-gray-600'"
         @click="activeTool = 'wheel'"
       >
-        <text class="mb-1 text-lg">🎡</text>
+        <view class="i-carbon-chart-ring mb-1 text-lg" />
         大转盘
       </view>
       <view
@@ -385,7 +385,7 @@ onMounted(() => {
         :class="activeTool === 'shake' ? 'bg-white shadow text-gray-800' : 'text-gray-600'"
         @click="activeTool = 'shake'"
       >
-        <text class="mb-1 text-lg">📳</text>
+        <view class="i-carbon-vibrate mb-1 text-lg" />
         摇一摇
       </view>
       <view
@@ -393,7 +393,7 @@ onMounted(() => {
         :class="activeTool === 'coin' ? 'bg-white shadow text-gray-800' : 'text-gray-600'"
         @click="activeTool = 'coin'"
       >
-        <text class="mb-1 text-lg">🪙</text>
+        <view class="i-carbon-currency mb-1 text-lg" />
         抛硬币
       </view>
     </view>
@@ -444,7 +444,7 @@ onMounted(() => {
           :style="{ borderColor: themeColor }"
           @click="runShake"
         >
-          <text class="text-6xl">📱</text>
+          <view class="i-carbon-mobile text-6xl text-gray-400" />
         </view>
         <text class="mt-6 animate-pulse text-sm text-gray-700 font-bold">点击手机或物理摇晃手机决定</text>
       </view>
@@ -463,12 +463,12 @@ onMounted(() => {
           >
             <!-- 正面 (吃) -->
             <view class="coin-face coin-front flex flex-col items-center justify-center text-xl text-white font-black" :style="{ background: themeColor }">
-              <text class="mb-1 text-3xl">😋</text>
+              <view class="i-carbon-face-satisfied mb-1 text-3xl text-yellow-300" />
               <text>吃！</text>
             </view>
             <!-- 反面 (不吃) -->
             <view class="coin-face coin-back flex flex-col items-center justify-center bg-gray-300 text-xl text-gray-600 font-black">
-              <text class="mb-1 text-3xl">🙅‍♂️</text>
+              <view class="i-carbon-face-neutral mb-1 text-3xl text-gray-500" />
               <text>不吃！</text>
             </view>
           </view>
@@ -480,10 +480,10 @@ onMounted(() => {
     <!-- 食物候选栏列表预览 -->
     <view class="mx-4 mt-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-3 flex items-center justify-between">
-        <text class="flex items-center text-sm text-gray-800 font-extrabold">
-          <text class="mr-1">🎯</text>
+        <view class="flex items-center text-sm text-gray-800 font-extrabold">
+          <view class="i-carbon-target mr-1 inline-block h-4 w-4 align-middle text-lg text-red-500" />
           当前决策池 (共{{ currentCandidates.length }}类)
-        </text>
+        </view>
         <text class="text-3xs text-gray-500">根据模式及黑白名单自动筛选</text>
       </view>
 
@@ -504,7 +504,7 @@ onMounted(() => {
       <view class="animate-scale-in max-w-sm w-full overflow-hidden rounded-3xl bg-white shadow-2xl">
         <!-- 头部装饰 -->
         <view class="h-28 flex flex-col items-center justify-center text-white" :style="{ background: themeColor }">
-          <text class="text-3xl">🎉</text>
+          <view class="i-carbon-badge mb-1 text-3xl text-yellow-300" />
           <text class="mt-1 text-lg font-black">恭喜！结果已经为你选出</text>
         </view>
 
@@ -531,16 +531,19 @@ onMounted(() => {
               </view>
             </view>
 
-            <view v-else class="my-4 border border-orange-100 rounded-2xl bg-orange-50 p-3">
-              <text class="block text-xs text-orange-700 font-semibold">😋 美味推荐：今日宜享受大餐！搭配大杯冻柠茶更爽哦</text>
+            <view v-else class="my-4 flex items-center justify-center border border-orange-100 rounded-2xl bg-orange-50 p-3">
+              <view class="i-carbon-restaurant mr-1 inline-block h-4 w-4 align-middle text-orange-600" />
+              <text class="text-xs text-orange-700 font-semibold">今日宜享受大餐！搭配大杯冻柠茶更爽哦</text>
             </view>
           </template>
 
           <template v-else>
             <text class="block text-xs text-gray-400 font-bold">硬币抛掷结果：</text>
-            <text class="my-5 block text-4xl text-gray-800 font-black">
-              {{ coinResult === 'eat' ? '吃！😋' : '不吃！🙅‍♂️' }}
-            </text>
+            <view class="my-5 flex items-center justify-center text-4xl text-gray-800 font-black">
+              <view v-if="coinResult === 'eat'" class="i-carbon-face-satisfied mr-2 text-4xl text-yellow-500" />
+              <view v-else class="i-carbon-face-neutral mr-2 text-4xl text-gray-400" />
+              {{ coinResult === 'eat' ? '吃！' : '不吃！' }}
+            </view>
           </template>
 
           <view class="my-4 h-px w-full bg-gray-100" />
@@ -553,13 +556,15 @@ onMounted(() => {
                 :style="{ background: themeColor }"
                 @click="goToNearby"
               >
-                📍 附近去哪吃
+                <view class="i-carbon-location mr-1 inline-block h-3.5 w-3.5 align-middle text-white" />
+                附近去哪吃
               </button>
               <button
                 class="flex flex-1 items-center justify-center border border-gray-200 rounded-xl bg-gray-100 py-2.5 text-xs text-gray-700 font-bold"
                 @click="goToSocial"
               >
-                🗳️ 发微信群投票
+                <view class="i-carbon-event mr-1 inline-block h-3.5 w-3.5 align-middle text-gray-600" />
+                发微信群投票
               </button>
             </view>
             <button
@@ -576,7 +581,7 @@ onMounted(() => {
     <!-- 广告模拟对话框 -->
     <view v-if="showAdDialog" class="fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/75 p-6 backdrop-blur-md">
       <view class="max-w-sm w-full flex flex-col items-center overflow-hidden rounded-3xl bg-gray-900 p-6 text-center text-white shadow-2xl">
-        <text class="my-4 text-5xl">📺</text>
+        <view class="i-carbon-video my-4 text-5xl text-yellow-500" />
         <text class="block text-base font-extrabold">正在加载赞助商视频广告...</text>
         <text class="mt-2 text-xs text-gray-400">观看完整视频可重置今日抽取额度</text>
 

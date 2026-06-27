@@ -175,7 +175,10 @@ const matchedRecipes = computed(() => {
 
     <!-- 1. 条件漏斗筛选 -->
     <view class="mx-4 mb-6 mt-2 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
-      <text class="mb-4 block text-sm text-gray-800 font-black">🔍 决策范围过滤</text>
+      <view class="mb-4 block flex items-center text-sm text-gray-800 font-black">
+        <view class="i-carbon-search mr-1 inline-block h-4 w-4 align-middle text-gray-700" />
+        决策范围过滤
+      </view>
 
       <!-- 距离过滤 -->
       <view class="mb-4">
@@ -236,7 +239,10 @@ const matchedRecipes = computed(() => {
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-4 flex items-center justify-between">
         <view>
-          <text class="block text-sm text-gray-800 font-black">🥗 极简身体档案</text>
+          <view class="block flex items-center text-sm text-gray-800 font-black">
+            <view class="i-carbon-user-profile mr-1 inline-block h-4 w-4 align-middle text-green-600" />
+            极简身体档案
+          </view>
           <text class="mt-0.5 block text-3xs text-gray-400">自动推导每日热量及主要元素摄入目标</text>
         </view>
         <button
@@ -253,18 +259,18 @@ const matchedRecipes = computed(() => {
           <text class="text-xs text-gray-600 font-bold">性别：</text>
           <view class="flex gap-2">
             <button
-              class="border rounded-full px-3.5 py-1 text-2xs font-bold"
+              class="flex items-center border rounded-full px-3.5 py-1 text-2xs font-bold"
               :class="gender === 'male' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-700 border-gray-200'"
               @click="gender = 'male'"
             >
-              👦 男生
+              <view class="i-carbon-gender-male mr-1 inline-block h-3 w-3 align-middle text-xs" /> 男生
             </button>
             <button
-              class="border rounded-full px-3.5 py-1 text-2xs font-bold"
+              class="flex items-center border rounded-full px-3.5 py-1 text-2xs font-bold"
               :class="gender === 'female' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-700 border-gray-200'"
               @click="gender = 'female'"
             >
-              👧 女生
+              <view class="i-carbon-gender-female mr-1 inline-block h-3 w-3 align-middle text-xs" /> 女生
             </button>
           </view>
         </view>
@@ -288,21 +294,21 @@ const matchedRecipes = computed(() => {
           <text class="text-xs text-gray-600 font-bold">管理目标：</text>
           <view class="flex gap-1.5">
             <button
-              class="border rounded-lg px-2.5 py-1 text-3xs font-bold"
+              class="flex items-center border rounded-lg px-2.5 py-1 text-3xs font-bold"
               :class="target === 'lose' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-700 border-gray-200'"
               @click="target = 'lose'"
             >
-              🔥 减脂
+              <view class="i-carbon-fire mr-1 inline-block h-3 w-3 align-middle text-xs" /> 减脂
             </button>
             <button
-              class="border rounded-lg px-2.5 py-1 text-3xs font-bold"
+              class="flex items-center border rounded-lg px-2.5 py-1 text-3xs font-bold"
               :class="target === 'gain' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-700 border-gray-200'"
               @click="target = 'gain'"
             >
-              💪 增肌
+              <view class="i-carbon-growth mr-1 inline-block h-3 w-3 align-middle text-xs" /> 增肌
             </button>
             <button
-              class="border rounded-lg px-2.5 py-1 text-3xs font-bold"
+              class="flex items-center border rounded-lg px-2.5 py-1 text-3xs font-bold"
               :class="target === 'maintain' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-700 border-gray-200'"
               @click="target = 'maintain'"
             >
@@ -354,7 +360,10 @@ const matchedRecipes = computed(() => {
     <view class="mx-4 mb-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-3 flex items-center justify-between">
         <view>
-          <text class="text-sm text-gray-800 font-black">🍳 冰箱食材匹配 (自炊党)</text>
+          <view class="flex items-center text-sm text-gray-800 font-black">
+            <view class="i-carbon-restaurant mr-1 inline-block h-4 w-4 align-middle text-orange-600" />
+            冰箱食材匹配 (自炊党)
+          </view>
           <text class="mt-0.5 block text-3xs text-gray-400">勾选已有的生鲜食材，为您自动配菜</text>
         </view>
       </view>
@@ -369,17 +378,23 @@ const matchedRecipes = computed(() => {
             : 'bg-white text-gray-600 border-gray-200'"
           @click="toggleIngredient(item)"
         >
-          <text class="mr-1">{{ appStore.fridgeIngredients.includes(item) ? '🟢' : '⚪' }}</text>
+          <view
+            class="mr-1.5 h-3 w-3 flex items-center justify-center border rounded-full transition-all"
+            :class="appStore.fridgeIngredients.includes(item) ? 'bg-green-500 border-green-500' : 'bg-white border-gray-300'"
+          >
+            <view v-if="appStore.fridgeIngredients.includes(item)" class="i-carbon-checkmark h-2 w-2 text-3xs text-white" />
+          </view>
           {{ item }}
         </view>
       </view>
 
       <button
-        class="w-full rounded-2xl py-3 text-sm text-white font-black shadow-md transition-transform active:scale-95"
+        class="w-full flex items-center justify-center rounded-2xl py-3 text-sm text-white font-black shadow-md transition-transform active:scale-95"
         :style="{ background: themeColor }"
         @click="showRecipeResult = true"
       >
-        🍳 匹配智能家常菜谱 (已配出 {{ matchedRecipes.length }} 个)
+        <view class="i-carbon-restaurant mr-1.5 inline-block h-4 w-4 align-middle text-white" />
+        匹配智能家常菜谱 (已配出 {{ matchedRecipes.length }} 个)
       </button>
     </view>
 
@@ -387,7 +402,10 @@ const matchedRecipes = computed(() => {
     <view v-if="showRecipeResult" class="backdrop-blur-xs fixed inset-0 z-50 flex animate-fade-in items-center justify-center bg-black/60 p-6">
       <view class="animate-scale-in max-h-85% max-w-sm w-full flex flex-col overflow-hidden rounded-3xl bg-white p-6 shadow-2xl">
         <view class="mb-4 flex shrink-0 items-center justify-between">
-          <text class="text-base text-gray-800 font-black">🍳 智能配菜结果</text>
+          <view class="flex items-center text-base text-gray-800 font-black">
+            <view class="i-carbon-restaurant mr-1.5 inline-block h-4 w-4 align-middle text-orange-600" />
+            智能配菜结果
+          </view>
           <button class="rounded-full bg-gray-100 px-2.5 py-1 text-xs text-gray-500 font-bold" @click="showRecipeResult = false">
             关闭
           </button>
@@ -396,7 +414,7 @@ const matchedRecipes = computed(() => {
         <!-- 滚动列表 -->
         <scroll-view :scroll-y="true" class="flex-1 overflow-y-auto">
           <view v-if="matchedRecipes.length === 0" class="py-12 text-center text-gray-400">
-            <text class="mb-3 block text-4xl">🥘</text>
+            <view class="i-carbon-restaurant mx-auto my-3 h-10 w-10 text-4xl text-gray-300" />
             <text class="text-xs font-bold">未能匹配出可用菜谱</text>
             <text class="mt-1 block text-3xs">请尝试勾选更多食材（如西红柿、鸡蛋、鸡胸肉等）</text>
           </view>
@@ -409,9 +427,10 @@ const matchedRecipes = computed(() => {
             >
               <view class="mb-2 flex items-center justify-between">
                 <text class="text-sm text-gray-800 font-black">{{ recipe.name }}</text>
-                <text class="border border-orange-100 rounded bg-orange-50 px-1.5 py-0.5 text-3xs text-orange-600 font-extrabold">
-                  ⏱️ {{ recipe.time }} · {{ recipe.difficulty }}
-                </text>
+                <view class="flex items-center border border-orange-100 rounded bg-orange-50 px-1.5 py-0.5 text-3xs text-orange-600 font-extrabold">
+                  <view class="i-carbon-time mr-1 inline-block h-3 w-3 align-middle text-orange-600" />
+                  {{ recipe.time }} · {{ recipe.difficulty }}
+                </view>
               </view>
 
               <view class="mb-3 flex items-center gap-1">
