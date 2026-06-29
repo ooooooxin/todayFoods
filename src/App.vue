@@ -9,6 +9,14 @@ let checkTimer: ReturnType<typeof setInterval> | null = null
 
 onLaunch((options) => {
   console.log('App.vue onLaunch', options)
+  // #ifdef MP-WEIXIN
+  if ((wx as any).cloud) {
+    (wx as any).cloud.init({
+      env: 'cloudbase-d3gjdpw4dec614381',
+      traceUser: true,
+    })
+  }
+  // #endif
 })
 onShow((options) => {
   console.log('App.vue onShow', options)

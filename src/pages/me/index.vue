@@ -86,15 +86,62 @@ function submitFeedback() {
     return
   }
 
+  const contentVal = feedbackText.value.trim()
+  const contactVal = feedbackContact.value.trim()
+
+  // #ifdef MP-WEIXIN
+  uni.showLoading({ title: '提交中...' })
+  if ((wx as any).cloud) {
+    const db = (wx as any).cloud.database()
+    db.collection('Suggestion').add({
+      data: {
+        content: contentVal,
+        contact: contactVal,
+        createTime: db.serverDate(),
+      },
+    }).then((res: any) => {
+      console.log('反馈上传成功：', res)
+      uni.hideLoading()
+      uni.showModal({
+        title: '反馈已提交',
+        content: '您的宝贵建议已上传！开发组会在24小时内与您联系回复。',
+        showCancel: false,
+        confirmText: '好的',
+      })
+      feedbackText.value = ''
+      feedbackContact.value = ''
+    }).catch((err: any) => {
+      console.error('反馈上传失败：', err)
+      uni.hideLoading()
+      uni.showToast({
+        title: '上传失败，请稍后重试',
+        icon: 'none',
+      })
+    })
+  }
+  else {
+    uni.hideLoading()
+    uni.showModal({
+      title: '反馈已提交',
+      content: '您的宝贵建议已提交模拟上传！',
+      showCancel: false,
+      confirmText: '好的',
+    })
+    feedbackText.value = ''
+    feedbackContact.value = ''
+  }
+  // #endif
+
+  // #ifndef MP-WEIXIN
   uni.showModal({
     title: '反馈已提交',
-    content: '您的宝贵建议已上传！开发组会在24小时内与您联系回复。',
+    content: '您的宝贵建议已提交模拟上传！',
     showCancel: false,
     confirmText: '好的',
   })
-
   feedbackText.value = ''
   feedbackContact.value = ''
+  // #endif
 }
 </script>
 
