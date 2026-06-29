@@ -98,7 +98,7 @@ const normalRestaurants: Restaurant[] = [
 const healthRestaurants: Restaurant[] = [
   {
     name: '绿野仙踪·轻食低卡沙拉（大望路店）',
-    logo: 'i-carbon-leaf',
+    logo: 'i-carbon-sprout',
     score: 4.9,
     distance: '150m',
     avgPrice: 35,
@@ -109,7 +109,7 @@ const healthRestaurants: Restaurant[] = [
   },
   {
     name: '沙野轻食（SOHO现代城店）',
-    logo: 'i-carbon-leaf',
+    logo: 'i-carbon-sprout',
     score: 4.7,
     distance: '420m',
     avgPrice: 32,

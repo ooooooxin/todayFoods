@@ -2414,7 +2414,7 @@ function resetStress() {
               class="absolute right-2 top-2 h-6 w-6 flex items-center justify-center rounded-full bg-red-500/10 active:bg-red-500/30"
               @click="deleteArchive(archive.id, $event)"
             >
-              <text class="i-carbon-trash text-xs text-red-400" />
+              <text class="i-carbon-trash-can text-xs text-red-400" />
             </view>
 
             <!-- 呼吸发光玻璃罐 -->

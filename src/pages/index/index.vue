@@ -346,7 +346,7 @@ onMounted(() => {
           <view class="i-carbon-fire mr-0.5 inline-block h-3.5 w-3.5 align-middle" />大众模式
         </view>
         <view class="z-10 h-7 w-20 flex items-center justify-center text-xs font-bold transition-colors" :class="isHealth ? 'text-white' : 'text-gray-600'">
-          <view class="i-carbon-leaf mr-0.5 inline-block h-3.5 w-3.5 align-middle" />轻食增肌
+          <view class="i-carbon-sprout mr-0.5 inline-block h-3.5 w-3.5 align-middle" />轻食增肌
         </view>
       </view>
     </view>
@@ -385,7 +385,7 @@ onMounted(() => {
         :class="activeTool === 'shake' ? 'bg-white shadow text-gray-800' : 'text-gray-600'"
         @click="activeTool = 'shake'"
       >
-        <view class="i-carbon-vibrate mb-1 text-lg" />
+        <view class="i-carbon-mobile mb-1 text-lg" />
         摇一摇
       </view>
       <view
@@ -481,7 +481,7 @@ onMounted(() => {
     <view class="mx-4 mt-6 rounded-3xl bg-white/70 p-5 shadow-sm backdrop-blur">
       <view class="mb-3 flex items-center justify-between">
         <view class="flex items-center text-sm text-gray-800 font-extrabold">
-          <view class="i-carbon-target mr-1 inline-block h-4 w-4 align-middle text-lg text-red-500" />
+          <view class="i-carbon-catalog mr-1 inline-block h-4 w-4 align-middle text-lg text-red-500" />
           当前决策池 (共{{ currentCandidates.length }}类)
         </view>
         <text class="text-3xs text-gray-500">根据模式及黑白名单自动筛选</text>

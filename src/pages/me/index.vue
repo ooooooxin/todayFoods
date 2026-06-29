@@ -119,7 +119,7 @@ function submitFeedback() {
           <text class="block text-base text-gray-800 font-black">干饭达人小杰</text>
           <view class="mt-1 flex items-center gap-1.5">
             <view class="text-4xs flex items-center rounded px-2 py-0.5 text-white font-bold" :style="{ background: themeColor }">
-              <view v-if="isHealth" class="i-carbon-leaf mr-1 inline-block h-3 w-3 align-middle text-xs text-white" />
+              <view v-if="isHealth" class="i-carbon-sprout mr-1 inline-block h-3 w-3 align-middle text-xs text-white" />
               <view v-else class="i-carbon-restaurant mr-1 inline-block h-3 w-3 align-middle text-xs text-white" />
               {{ isHealth ? '减脂模范生' : '资深干饭人' }}
             </view>
@@ -242,7 +242,7 @@ function submitFeedback() {
           class="flex items-center justify-between border border-gray-100 rounded-2xl bg-gray-50 p-3"
         >
           <view class="flex items-center gap-2">
-            <view class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-xl" :class="[hist.mode === 'health' ? 'i-carbon-leaf text-green-500' : 'i-carbon-restaurant text-orange-500']" />
+            <view class="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 text-xl" :class="[hist.mode === 'health' ? 'i-carbon-sprout text-green-500' : 'i-carbon-restaurant text-orange-500']" />
             <view>
               <view class="flex items-center gap-1.5">
                 <text class="text-xs text-gray-700 font-black">{{ hist.food }}</text>
