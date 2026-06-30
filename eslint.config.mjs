@@ -19,6 +19,7 @@ export default uniHelper({
     'src/manifest.json',
     // 忽略自动生成文件
     'src/service/**',
+    '*_db_import.json',
   ],
   // https://eslint-config.antfu.me/rules
   rules: {

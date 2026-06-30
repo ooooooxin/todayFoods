@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useAppStore } from '@/store/appMode'
 import { statusNavTotalHeight, systemInfo } from '@/utils/systemInfo'
 
@@ -29,6 +29,32 @@ const isLocating = ref(false)
 
 function refreshLocation() {
   isLocating.value = true
+  // #ifdef MP-WEIXIN
+  uni.getLocation({
+    type: 'gcj02',
+    success: (res) => {
+      locationName.value = `纬度: ${res.latitude.toFixed(4)}, 经度: ${res.longitude.toFixed(4)}`
+      uni.showToast({
+        title: '定位获取成功',
+        icon: 'success',
+      })
+      queryRestaurants()
+    },
+    fail: (err) => {
+      console.warn('获取真实定位失败：', err)
+      setTimeout(() => {
+        isLocating.value = false
+        locationName.value = '北京市朝阳区三里屯 SOHO 办公区'
+        uni.showToast({
+          title: '定位刷新成功',
+          icon: 'success',
+        })
+        queryRestaurants()
+      }, 1000)
+    },
+  })
+  // #endif
+  // #ifndef MP-WEIXIN
   setTimeout(() => {
     isLocating.value = false
     locationName.value = '北京市朝阳区三里屯 SOHO 办公区'
@@ -36,7 +62,9 @@ function refreshLocation() {
       title: '定位刷新成功',
       icon: 'success',
     })
+    queryRestaurants()
   }, 1000)
+  // #endif
 }
 
 interface Restaurant {
@@ -49,6 +77,7 @@ interface Restaurant {
   kcal?: string
   recommend: string
   avoid: string
+  mode?: 'normal' | 'health'
 }
 
 // 模拟餐厅池
@@ -142,8 +171,40 @@ const healthRestaurants: Restaurant[] = [
   },
 ]
 
+const cloudRestaurants = ref<Restaurant[]>([])
+
+function queryRestaurants() {
+  isLocating.value = true
+  // #ifdef MP-WEIXIN
+  if ((wx as any).cloud) {
+    const db = (wx as any).cloud.database()
+    db.collection('Restaurants').get().then((res: any) => {
+      const data = res.data as Restaurant[]
+      if (data && data.length > 0) {
+        cloudRestaurants.value = data
+      }
+      isLocating.value = false
+    }).catch((err: any) => {
+      console.warn('获取云端餐厅数据失败，使用本地默认：', err)
+      isLocating.value = false
+    })
+  }
+  else {
+    isLocating.value = false
+  }
+  // #endif
+  // #ifndef MP-WEIXIN
+  isLocating.value = false
+  // #endif
+}
+
+onMounted(() => {
+  queryRestaurants()
+})
+
 const activeRestaurants = computed(() => {
-  return isHealth.value ? healthRestaurants : normalRestaurants
+  const basePool = cloudRestaurants.value.length > 0 ? cloudRestaurants.value : (isHealth.value ? healthRestaurants : normalRestaurants)
+  return basePool.filter(item => !item.mode || item.mode === (isHealth.value ? 'health' : 'normal'))
 })
 
 // CPS 优惠券模拟

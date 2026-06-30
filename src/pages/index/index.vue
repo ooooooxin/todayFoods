@@ -61,9 +61,69 @@ const healthFoods = [
   '黑椒牛柳杏鲍菇',
 ]
 
+interface CloudFood {
+  name: string
+  mode: 'normal' | 'health'
+  image?: string
+}
+
+const cloudFoods = ref<CloudFood[]>([])
+
+const cloudNormalFoods = computed(() => {
+  return cloudFoods.value.filter(item => item.mode === 'normal').map(item => item.name)
+})
+
+const cloudHealthFoods = computed(() => {
+  return cloudFoods.value.filter(item => item.mode === 'health').map(item => item.name)
+})
+
+const activeNormalFoods = computed(() => {
+  return cloudNormalFoods.value.length > 0 ? cloudNormalFoods.value : normalFoods
+})
+
+const activeHealthFoods = computed(() => {
+  return cloudHealthFoods.value.length > 0 ? cloudHealthFoods.value : healthFoods
+})
+
+const foodImageMap: Record<string, string> = {
+  火锅: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80',
+  烤肉: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=400&q=80',
+  麻辣拌: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=400&q=80',
+  黄焖鸡米饭: 'https://images.unsplash.com/photo-1627308595229-7830a5c91f9f?auto=format&fit=crop&w=400&q=80',
+  日式拉面: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80',
+  汉堡炸鸡: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80',
+  意式披萨: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80',
+  窑烤披萨: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80',
+  水饺: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=400&q=80',
+  小龙虾: 'https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=400&q=80',
+  鸡胸肉牛油果沙拉: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80',
+  香煎牛肉糙米饭: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80',
+  清蒸三文鱼时蔬: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=400&q=80',
+  魔芋丝鸡丝拌面: 'https://images.unsplash.com/photo-1547928576-a4a3323d8b36?auto=format&fit=crop&w=400&q=80',
+  金枪鱼全麦三明治: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=400&q=80',
+  白灼虾仁西兰花: 'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?auto=format&fit=crop&w=400&q=80',
+}
+
+const defaultFoodImage = 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=400&q=80'
+
+// 结果弹窗
+const showResult = ref(false)
+const selectedFood = ref('')
+const resultType = ref<'food' | 'coin'>('food')
+const coinResult = ref<'eat' | 'not'>('eat')
+
+const currentFoodImage = computed(() => {
+  if (!selectedFood.value)
+    return defaultFoodImage
+  const matched = cloudFoods.value.find(f => f.name === selectedFood.value)
+  if (matched?.image)
+    return matched.image
+  return foodImageMap[selectedFood.value] || defaultFoodImage
+})
+
 // 过滤黑白名单后的候选菜池
 const currentCandidates = computed(() => {
-  const basePool = isHealth.value ? healthFoods : normalFoods
+  const basePool = isHealth.value ? activeHealthFoods.value : activeNormalFoods.value
   // 过滤掉黑名单中的食物
   let filtered = basePool.filter(food => !appStore.blacklist.includes(food))
   // 如果白名单里有匹配模式的食物，将其混入其中以增加概率（双倍权重）
@@ -110,12 +170,6 @@ const gradientString = computed(() => {
   })
   return `conic-gradient(${colors.join(', ')})`
 })
-
-// 结果弹窗
-const showResult = ref(false)
-const selectedFood = ref('')
-const resultType = ref<'food' | 'coin'>('food')
-const coinResult = ref<'eat' | 'not'>('eat')
 
 // 激励广告弹窗
 const showAdDialog = ref(false)
@@ -284,6 +338,21 @@ function goToSocial() {
 
 // 摇一摇微信加速度监听
 onMounted(() => {
+  // #ifdef MP-WEIXIN
+  if ((wx as any).cloud) {
+    const db = (wx as any).cloud.database()
+    db.collection('Foods').get().then((res: any) => {
+      const data = res.data as CloudFood[]
+      console.log('获取云端菜池成功', data)
+      if (data && data.length > 0) {
+        cloudFoods.value = data
+      }
+    }).catch((err: any) => {
+      console.warn('获取云端菜池失败，使用本地默认菜池：', err)
+    })
+  }
+  // #endif
+
   // #ifdef MP-WEIXIN
   let lastX = 0
   let lastY = 0
@@ -511,7 +580,9 @@ onMounted(() => {
         <view class="p-6 text-center">
           <template v-if="resultType === 'food'">
             <text class="block text-xs text-gray-400 font-bold tracking-widest uppercase">今天建议你吃：</text>
-            <text class="my-4 block text-3xl text-gray-800 font-black">{{ selectedFood }}</text>
+            <!-- 菜品图片展示 -->
+            <image :src="currentFoodImage" class="shadow-xs my-3 h-32 w-full border border-gray-100 rounded-2xl bg-gray-50" mode="aspectFill" />
+            <text class="my-2 block text-2xl text-gray-800 font-black">{{ selectedFood }}</text>
 
             <!-- 宏量营养素估算（仅轻食模式显示） -->
             <view v-if="isHealth" class="my-4 flex justify-around border border-green-100 rounded-2xl bg-green-50 p-3 text-center">
